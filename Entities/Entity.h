@@ -3,24 +3,29 @@
 #ifndef Entity_H
 #define Entity_H
 
-#include "../Vector2.h"
+#include "../IGame.h"
+#include <SFML/Graphics.hpp>
+#include <iostream>
 
 namespace Entities {
-    class Entity {
+    class Entity : protected IGame {
     public:
-        Entity();
-        Entity(Vector2<float> newPosition, Vector2<float> newRotation, Vector2<int> newScale);
-        ~Entity();
+        virtual ~Entity();
+        sf::Sprite& getSprite();
+        void update(sf::RenderWindow* window) override;
 
     protected:
-        Vector2<float>* position;
-        Vector2<float>* rotation;
-        Vector2<int>* scale;
+        sf::Texture texture;
+        sf::Sprite sprite;
 
         float velocity = 0;
+        float terminalVelocity = 0;
         float angularVelocity = 0;
 
-        int health = 0;
+    protected:
+        Entity();
+        Entity(std::string newTexturePath, sf::Vector2f* newPosition, float newRotation);
+        void setSprite(std::string path);
     };
 }
 

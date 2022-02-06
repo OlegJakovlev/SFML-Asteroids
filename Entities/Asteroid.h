@@ -8,6 +8,8 @@
 namespace Entities {
     class Asteroid : public Entity
     {
+    public:
+        Asteroid(sf::Vector2f* newPosition, float newRotation);
     };
 }
 
