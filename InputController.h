@@ -29,8 +29,8 @@ class InputController {
 
  public:
     InputController();
-    void evaluateInput(std::string actionName, sf::Event e);
-    bool isActionPressed(std::string actionName);
+    void evaluateInput(const std::string& actionName, const sf::Event& e);
+    bool isActionPressed(const std::string& actionName);
 };
 
 #endif

@@ -1,5 +1,4 @@
 #include "InputController.h"
-#include <iostream>
 
 InputController::InputController() {
     // Bind all actions to keys
@@ -39,7 +38,7 @@ InputController::InputController() {
     Binds.insert(std::pair<std::string, MyKeys>("RotateRight", key));
 }
 
-void InputController::evaluateInput(std::string actionName, sf::Event e) {
+void InputController::evaluateInput(const std::string& actionName, const sf::Event& e) {
     // Check if action bind exists
     if ((Binds.find(actionName)) == Binds.end()) return;
 
@@ -70,7 +69,7 @@ void InputController::evaluateInput(std::string actionName, sf::Event e) {
     }
 }
 
-bool InputController::isActionPressed(std::string actionName) {
+bool InputController::isActionPressed(const std::string& actionName) {
     // Check if action bind exists
     if ((Binds.find(actionName)) == Binds.end()) return false;
 

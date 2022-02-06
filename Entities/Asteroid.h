@@ -4,13 +4,17 @@
 #define Asteroid_H
 
 #include "Entity.h"
+#include <string>
 
 namespace Entities {
-    class Asteroid : public Entity
-    {
-    public:
-        Asteroid(sf::Vector2f* newPosition, float newRotation);
-    };
-}
+
+class Asteroid : public Entity {
+ public:
+    Asteroid(const std::string& newTexturePath,
+        const sf::Vector2f& newPosition,
+        const float newRotation);
+};
+
+}  // namespace Entities
 
 #endif

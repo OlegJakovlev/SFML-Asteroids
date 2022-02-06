@@ -1,7 +1,11 @@
 #include "Asteroid.h"
 
 namespace Entities {
-	Asteroid::Asteroid(sf::Vector2f* newPosition, float newRotation) 
-		: Entity("Sprites/Asteroids/Huge.png", newPosition, newRotation) {
-	}
+
+Asteroid::Asteroid(const std::string& newTexturePath,
+    const sf::Vector2f& newPosition,
+    const float newRotation)
+    : Entity(newTexturePath, newPosition, newRotation) {
 }
+
+}  // namespace Entities
