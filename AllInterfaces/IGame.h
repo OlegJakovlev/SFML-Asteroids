@@ -5,10 +5,13 @@
 
 #include <SFML/Graphics.hpp>
 
+namespace Interfaces {
+
 class IGame {
  public:
     virtual void update(sf::RenderWindow* window);
 };
 
-#endif
+}  // namespace Interfaces
 
+#endif

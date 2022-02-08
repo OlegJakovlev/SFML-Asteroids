@@ -11,8 +11,7 @@ namespace Entities {
 class Asteroid : public Entity {
  public:
     Asteroid(const std::string& newTexturePath,
-        const sf::Vector2f& newPosition,
-        const float newRotation);
+        const sf::Vector2f& newPosition, const float newRotation);
 };
 
 }  // namespace Entities

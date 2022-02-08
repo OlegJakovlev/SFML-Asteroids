@@ -10,6 +10,7 @@
 #include "Entities/Entity.h"
 #include "Entities/Asteroid.h"
 #include "Entities/Spaceship.h"
+#include "AllFactories/AsteroidFactory.h"
 
 int main() {
     sf::RenderWindow window(
@@ -24,11 +25,16 @@ int main() {
         return EXIT_FAILURE;
 
     std::unique_ptr<Entities::Spaceship> player(
-        new Entities::Spaceship (
+        std::make_unique<Entities::Spaceship> (
             sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_WIDTH / 2),
-            90.0f
+            -90.0f
         )
     );
+
+    Factories::AsteroidFactory asteroidFactory;
+    asteroidFactory.createHugeAsteroid(sf::Vector2f(100, 100));
+    asteroidFactory.createMediumAsteroid(sf::Vector2f(200, 100));
+    asteroidFactory.createSmallAsteroid(sf::Vector2f(300, 100));
 
     while (window.isOpen()) {
         // Check if user exits the game
@@ -54,7 +60,18 @@ int main() {
 
         // Erase old and draw new frame
         window.clear();
+
+        // Draw player and all projectiles
         window.draw((*player).getSprite());
+
+        for (auto& projectile : ((*player).getProjectiles())) {
+            (*projectile).update(&window);
+            window.draw((*projectile).getSprite());
+        }
+
+        for (auto g : asteroidFactory.getAsteroids()) {
+            window.draw((*g).getSprite());
+        }
 
         window.display();
     }

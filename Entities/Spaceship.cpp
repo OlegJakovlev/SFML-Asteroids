@@ -4,29 +4,29 @@ namespace Entities {
 
 Spaceship::Spaceship(const sf::Vector2f& newPosition, const float newRotation)
     : Entity("Sprites/Player.png", newPosition, newRotation) {
-    angularVelocity = 10;
+    angularVelocity = 5;
     terminalVelocity = 3;
     velocity = 0;
     projectileOffset = sf::Vector2f(0, sprite.getLocalBounds().height / 2);
+    deltaClock = sf::Clock();
 }
 
 void Spaceship::update(sf::RenderWindow* window) {
     Entity::update(window);
 
-    sf::Event e;
-    while ((*window).pollEvent(e)) evaluateInput(e);
+    // Shoot event
+    if (inputController.isActionPressed("Shoot")
+        && deltaClock.getElapsedTime() >= delayBetweenShots) {
+        deltaClock.restart();
+        projectiles.push_back(std::unique_ptr<Projectile>
+            (new Projectile(sprite.getPosition(), sprite.getRotation())));
+    }
 
     // Apply boost
     if (inputController.isActionPressed("Boost")) {
         velocity += 0.125;
         if (velocity > terminalVelocity) velocity = terminalVelocity;
     }
-
-    // Move
-    sprite.move(
-        velocity * cos(sprite.getRotation() * 3.14 / 180),
-        velocity * sin(sprite.getRotation() * 3.14 / 180)
-    );
 
     // Simulate space inertia behavior
     velocity -= 0.025;
@@ -39,15 +39,12 @@ void Spaceship::update(sf::RenderWindow* window) {
     if (inputController.isActionPressed("RotateLeft"))
         sprite.setRotation(sprite.getRotation() - angularVelocity);
 
-    //std::cout << "X: " << (sprite.getPosition().x) << " | Y: " << (sprite.getPosition().y) << "\n";
-    //std::cout << "Rotation: " << (360 - sprite.getRotation()) << " degrees" << "\n";
+    std::cout << "X: " << (sprite.getPosition().x) << " | Y: " << (sprite.getPosition().y) << "\n";
+    std::cout << "Rotation: " << (sprite.getRotation()) << " degrees" << "\n";
 }
 
-void Spaceship::evaluateInput(sf::Event e) {
-    inputController.evaluateInput("Shoot", e);
-    inputController.evaluateInput("Boost", e);
-    inputController.evaluateInput("RotateRight", e);
-    inputController.evaluateInput("RotateLeft", e);
+std::vector<std::unique_ptr<Projectile>>& Spaceship::getProjectiles() {
+    return projectiles;
 }
 
 }  // namespace Entities

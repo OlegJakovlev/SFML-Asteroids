@@ -148,22 +148,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AllFactories\AsteroidFactory.cpp" />
     <ClCompile Include="Entities\Asteroid.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
-    <ClCompile Include="IGame.cpp" />
+    <ClCompile Include="AllInterfaces\IGame.cpp" />
     <ClCompile Include="InputController.cpp" />
+    <ClCompile Include="AllInterfaces\ISubscriber.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Entities\Spaceship.cpp" />
+    <ClCompile Include="Entities\Projectile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AllFactories\AsteroidFactory.h" />
     <ClInclude Include="Entities\Asteroid.h" />
     <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="Entities\Spaceship.h" />
-    <ClInclude Include="IGame.h" />
+    <ClInclude Include="AllInterfaces\IGame.h" />
     <ClInclude Include="InputController.h" />
+    <ClInclude Include="Entities\Projectile.h" />
+    <ClInclude Include="AllInterfaces\ISubscriber.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Sprites\Asteroids\Huge.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

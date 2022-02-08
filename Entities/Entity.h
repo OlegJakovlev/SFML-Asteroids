@@ -5,12 +5,12 @@
 
 #include <iostream>
 #include <string>
-#include "../IGame.h"
+#include "../AllInterfaces/IGame.h"
 #include <SFML/Graphics.hpp>
 
 namespace Entities {
 
-class Entity : protected IGame {
+class Entity : public Interfaces::IGame {
  public:
     virtual ~Entity();
     sf::Sprite& getSprite();

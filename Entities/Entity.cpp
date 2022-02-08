@@ -11,7 +11,7 @@ Entity::Entity(const std::string& newTexturePath,
     // Set sprite and its transform
     setSprite(newTexturePath);
     sprite.setPosition(newPosition);
-    sprite.setRotation(360 - newRotation);
+    sprite.setRotation(newRotation);
     sprite.setOrigin(sprite.getLocalBounds().width / 2,
         sprite.getLocalBounds().height / 2);
 }
@@ -20,9 +20,15 @@ Entity::~Entity() {
 }
 
 void Entity::update(sf::RenderWindow* window) {
+    // Move sprite
+    sprite.move(
+        velocity * cos(sprite.getRotation() * 3.14 / 180),
+        velocity * sin(sprite.getRotation() * 3.14 / 180)
+    );
+
     // Check if object is out of level bounds
     sf::Vector2f position = sprite.getPosition();
-    std::cout << "X: " << (position.x) << " | Y: " << (position.y) << "\n";
+    //std::cout << "X: " << (position.x) << " | Y: " << (position.y) << "\n";
 
     if (position.x < 0) position.x = window->getSize().x;
     if (position.x > window->getSize().x) position.x = 0;
