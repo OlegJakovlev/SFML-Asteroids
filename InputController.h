@@ -29,6 +29,7 @@ class InputController {
 
  public:
     InputController();
+    virtual ~InputController();
     bool isActionPressed(const std::string& actionName);
 };
 

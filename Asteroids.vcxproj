@@ -153,10 +153,12 @@
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="AllInterfaces\IGame.cpp" />
     <ClCompile Include="InputController.cpp" />
-    <ClCompile Include="AllInterfaces\ISubscriber.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Entities\Spaceship.cpp" />
     <ClCompile Include="Entities\Projectile.cpp" />
+    <ClCompile Include="Entities\SmallAsteroid.cpp" />
+    <ClCompile Include="Entities\MediumAsteroid.cpp" />
+    <ClCompile Include="Entities\HugeAsteroid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -169,7 +171,9 @@
     <ClInclude Include="AllInterfaces\IGame.h" />
     <ClInclude Include="InputController.h" />
     <ClInclude Include="Entities\Projectile.h" />
-    <ClInclude Include="AllInterfaces\ISubscriber.h" />
+    <ClInclude Include="Entities\SmallAsteroid.h" />
+    <ClInclude Include="Entities\MediumAsteroid.h" />
+    <ClInclude Include="Entities\HugeAsteroid.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Sprites\Asteroids\Huge.png" />

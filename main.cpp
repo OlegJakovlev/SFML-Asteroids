@@ -5,12 +5,10 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-#include "InputController.h"
-
-#include "Entities/Entity.h"
-#include "Entities/Asteroid.h"
-#include "Entities/Spaceship.h"
 #include "AllFactories/AsteroidFactory.h"
+#include "Entities/Entity.h"
+#include "Entities/Spaceship.h"
+#include "Entities/Projectile.h"
 
 int main() {
     sf::RenderWindow window(
@@ -24,22 +22,28 @@ int main() {
     if (!globalFont.loadFromFile("./Fonts/HyperSpace.ttf"))
         return EXIT_FAILURE;
 
-    std::unique_ptr<Entities::Spaceship> player(
-        std::make_unique<Entities::Spaceship> (
-            sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_WIDTH / 2),
-            -90.0f
-        )
-    );
+    Factories::AsteroidFactory asteroidFactory(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
 
-    Factories::AsteroidFactory asteroidFactory;
-    asteroidFactory.createHugeAsteroid(sf::Vector2f(100, 100));
-    asteroidFactory.createMediumAsteroid(sf::Vector2f(200, 100));
-    asteroidFactory.createSmallAsteroid(sf::Vector2f(300, 100));
+    // Store all entities in list
+    std::vector<Entities::Entity*> entities;
+
+    // Player
+    Entities::Spaceship* player = new Entities::Spaceship(
+        sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2),
+        -90.0f);
+    entities.push_back(player);
+
+    // Asteroids
+    for (int n = 0; n < 5; n++) {
+        entities.push_back(asteroidFactory.createHugeAsteroid());
+    }
 
     while (window.isOpen()) {
-        // Check if user exits the game
+
         sf::Event e;
         while (window.pollEvent(e)) {
+
+            // Check if user exits the game
             if (e.type == sf::Event::Closed)
                 window.close();
 
@@ -53,27 +57,78 @@ int main() {
                     break;
                 }
             }
+
+            if (player != nullptr && player->shootProjectile()) {
+                entities.push_back(new Entities::Projectile(
+                    player->getSprite().getPosition() + player->getProjectileOffset(),
+                    player->getSprite().getRotation())
+                );
+            }
         }
 
-        // Call update for each object
-        (*player).update(&window);
-
-        // Erase old and draw new frame
+        // Erase old frame
         window.clear();
 
-        // Draw player and all projectiles
-        window.draw((*player).getSprite());
-
-        for (auto& projectile : ((*player).getProjectiles())) {
-            (*projectile).update(&window);
-            window.draw((*projectile).getSprite());
+        // Update and draw update every object
+        for (Entities::Entity* gameObject : entities) {
+            gameObject->update(&window);
+            window.draw(gameObject->getSprite());
         }
 
-        for (auto g : asteroidFactory.getAsteroids()) {
-            window.draw((*g).getSprite());
-        }
-
+        // Display new frame to player
         window.display();
+
+        // Check collisions
+
+        for (auto firstCollider : entities) {
+            for (auto secondCollider : entities) {
+                // Player + Projectile
+                if (firstCollider->getName() == "player" && secondCollider->getName() == "projectile") {
+                    if (firstCollider->checkCollision(secondCollider)) {
+                        firstCollider->setDead();
+                        secondCollider->setDead();
+                    }
+                }
+
+                // // Player + Asteroid
+                if (firstCollider->getName() == "player" && secondCollider->getName() == "asteroid") {
+                    if (firstCollider->checkCollision(secondCollider)) {
+                        firstCollider->setDead();
+                        secondCollider->setDead();
+                    }
+                }
+
+                // Projectile + Asteroid
+                if (firstCollider->getName() == "projectile" && secondCollider->getName() == "asteroid") {
+                    if (firstCollider->checkCollision(secondCollider)) {
+                        firstCollider->setDead();
+                        secondCollider->setDead();
+                    }
+                }
+            }
+        }
+
+        // Erase dead objects
+        std::vector<Entities::Entity*>::iterator it = entities.begin();
+
+        for (; it != entities.end();) {
+            if ((*it)->isDead()) {
+                Entities::Entity* e = *it;
+                it = entities.erase(it);
+                //delete e;
+            }
+            else {
+                it++;
+            }
+        }
+
+        it = entities.begin();
+        for (; it != entities.end();) {
+            std::cout << (*it)->getName() << "\n";
+            it++;
+        }
+
+        std::cout << "---------\n\n";
     }
 
     return 0;

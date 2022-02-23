@@ -7,23 +7,26 @@ Spaceship::Spaceship(const sf::Vector2f& newPosition, const float newRotation)
     angularVelocity = 5;
     terminalVelocity = 3;
     velocity = 0;
-    projectileOffset = sf::Vector2f(0, sprite.getLocalBounds().height / 2);
     deltaClock = sf::Clock();
+    name = "player";
+    inputController = new InputController();
+}
+
+Spaceship::~Spaceship() {
+    delete inputController;
 }
 
 void Spaceship::update(sf::RenderWindow* window) {
     Entity::update(window);
 
-    // Shoot event
-    if (inputController.isActionPressed("Shoot")
-        && deltaClock.getElapsedTime() >= delayBetweenShots) {
-        deltaClock.restart();
-        projectiles.push_back(std::unique_ptr<Projectile>
-            (new Projectile(sprite.getPosition(), sprite.getRotation())));
-    }
+    // Calculate new offset
+    projectileOffset = sf::Vector2f(
+        cos(sprite.getRotation() * 3.14 / 180) * sprite.getLocalBounds().width / 1.25,
+        sin(sprite.getRotation() * 3.14 / 180) * sprite.getLocalBounds().height / 1.25
+    );
 
     // Apply boost
-    if (inputController.isActionPressed("Boost")) {
+    if (inputController->isActionPressed("Boost")) {
         velocity += 0.125;
         if (velocity > terminalVelocity) velocity = terminalVelocity;
     }
@@ -33,18 +36,28 @@ void Spaceship::update(sf::RenderWindow* window) {
     if (velocity < 0) velocity = 0;
 
     // Rotation
-    if (inputController.isActionPressed("RotateRight"))
+    if (inputController->isActionPressed("RotateRight"))
         sprite.setRotation(sprite.getRotation() + angularVelocity);
 
-    if (inputController.isActionPressed("RotateLeft"))
+    if (inputController->isActionPressed("RotateLeft"))
         sprite.setRotation(sprite.getRotation() - angularVelocity);
 
-    std::cout << "X: " << (sprite.getPosition().x) << " | Y: " << (sprite.getPosition().y) << "\n";
-    std::cout << "Rotation: " << (sprite.getRotation()) << " degrees" << "\n";
+    //std::cout << "X: " << (sprite.getPosition().x) << " | Y: " << (sprite.getPosition().y) << "\n";
+    //std::cout << "Rotation: " << (sprite.getRotation()) << " degrees" << "\n";
 }
 
-std::vector<std::unique_ptr<Projectile>>& Spaceship::getProjectiles() {
-    return projectiles;
+bool Spaceship::shootProjectile() {
+    // Shoot event
+    if (inputController->isActionPressed("Shoot")
+        && deltaClock.getElapsedTime() >= delayBetweenShots) {
+        deltaClock.restart();
+        return true;
+    }
+    return false;
+}
+
+sf::Vector2f Spaceship::getProjectileOffset() {
+    return projectileOffset;
 }
 
 }  // namespace Entities

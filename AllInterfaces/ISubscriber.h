@@ -9,11 +9,11 @@ namespace Interfaces {
 
 class ISubscriber {
  public:
-    virtual void subscribe(Factories::AsteroidFactory newFactory);
+    void subscribe(Factories::AsteroidFactory* newFactory);
     virtual void notify();
 
- private:
-    Factories::AsteroidFactory factory;
+ protected:
+     Factories::AsteroidFactory* factory;
 };
 
 }  // namespace Interfaces

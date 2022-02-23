@@ -2,7 +2,7 @@
 
 namespace Interfaces {
 
-void ISubscriber::subscribe(Factories::AsteroidFactory newFactory) {
+void ISubscriber::subscribe(Factories::AsteroidFactory* newFactory) {
     factory = newFactory;
 }
 

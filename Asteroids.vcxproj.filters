@@ -36,10 +36,16 @@
     <ClCompile Include="Entities\Projectile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AllInterfaces\ISubscriber.cpp">
+    <ClCompile Include="AllFactories\AsteroidFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AllFactories\AsteroidFactory.cpp">
+    <ClCompile Include="Entities\SmallAsteroid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\MediumAsteroid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\HugeAsteroid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,10 +71,16 @@
     <ClInclude Include="Entities\Projectile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AllInterfaces\ISubscriber.h">
+    <ClInclude Include="AllFactories\AsteroidFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AllFactories\AsteroidFactory.h">
+    <ClInclude Include="Entities\SmallAsteroid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\MediumAsteroid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\HugeAsteroid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

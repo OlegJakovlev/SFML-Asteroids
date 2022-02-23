@@ -38,6 +38,10 @@ InputController::InputController() {
     Binds.insert(std::pair<std::string, MyKeys>("RotateRight", key));
 }
 
+InputController::~InputController() {
+    Binds.clear();
+}
+
 bool InputController::isActionPressed(const std::string& actionName) {
     // Check if action bind exists
     if ((Binds.find(actionName)) == Binds.end()) return false;

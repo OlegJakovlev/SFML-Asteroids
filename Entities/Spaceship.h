@@ -14,15 +14,17 @@ namespace Entities {
 class Spaceship : public Entity {
  public:
     Spaceship(const sf::Vector2f& newPosition, const float newRotation);
+    ~Spaceship();
     void update(sf::RenderWindow* window) override;
-    std::vector<std::unique_ptr<Projectile>>& getProjectiles();
+    bool shootProjectile();
+    sf::Vector2f getProjectileOffset();
 
  private:
-    InputController inputController;
+    float terminalVelocity = 0;
+    InputController* inputController;
 
     // Shooting
     sf::Vector2f projectileOffset;
-    std::vector<std::unique_ptr<Projectile>> projectiles;
     const sf::Time delayBetweenShots = sf::seconds(0.25f);
     sf::Clock deltaClock;
 };

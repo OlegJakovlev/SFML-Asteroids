@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "Spaceship.h"
 
 namespace Entities {
 
@@ -19,6 +20,10 @@ Entity::Entity(const std::string& newTexturePath,
 Entity::~Entity() {
 }
 
+std::string Entity::getName() {
+    return name;
+}
+
 void Entity::update(sf::RenderWindow* window) {
     // Move sprite
     sprite.move(
@@ -36,6 +41,22 @@ void Entity::update(sf::RenderWindow* window) {
     if (position.y > window->getSize().y) position.y = 0;
 
     sprite.setPosition(position);
+}
+
+bool Entity::checkCollision(Entity* checkCollisionWith) {
+    sf::FloatRect currentTransform = sprite.getGlobalBounds();
+
+    if (checkCollisionWith->getSprite().getGlobalBounds().intersects(currentTransform)) {
+        return true;
+    }
+}
+
+void Entity::setDead() {
+    dead = true;
+}
+
+bool Entity::isDead() {
+    return dead;
 }
 
 void Entity::setSprite(const std::string path) {
