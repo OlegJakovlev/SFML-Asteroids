@@ -13,6 +13,7 @@ Spaceship::Spaceship(const sf::Vector2f& newPosition, const float newRotation)
 }
 
 Spaceship::~Spaceship() {
+    std::cout << 1;
     delete inputController;
 }
 

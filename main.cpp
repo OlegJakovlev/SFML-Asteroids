@@ -113,22 +113,14 @@ int main() {
 
         for (; it != entities.end();) {
             if ((*it)->isDead()) {
-                Entities::Entity* e = *it;
+                // Set player object to null
+                if ((*it)->getName() == "player") player = nullptr;
                 it = entities.erase(it);
-                //delete e;
             }
             else {
                 it++;
             }
         }
-
-        it = entities.begin();
-        for (; it != entities.end();) {
-            std::cout << (*it)->getName() << "\n";
-            it++;
-        }
-
-        std::cout << "---------\n\n";
     }
 
     return 0;
