@@ -10,52 +10,52 @@ AsteroidFactory::AsteroidFactory(sf::Vector2f newWorldSize) {
 AsteroidFactory::~AsteroidFactory() {
 }
 
-Entities::Asteroid* AsteroidFactory::createHugeAsteroid() {
+void AsteroidFactory::createHugeAsteroid() {
     Entities::Asteroid* newAsteroid = new Entities::HugeAsteroid(
         getSpawnCoordinates(), getRandom(0.0f, 360.0f));
 
     newAsteroid->subscribe(this);
-    return newAsteroid;
+    objectsToBeCreated.push(newAsteroid);
 }
 
-Entities::Asteroid* AsteroidFactory::createMediumAsteroid() {
+void AsteroidFactory::createMediumAsteroid() {
     Entities::Asteroid* newAsteroid = new Entities::MediumAsteroid(
         getSpawnCoordinates(), getRandom(0.0f, 360.0f));
 
     newAsteroid->subscribe(this);
-    return newAsteroid;
+    objectsToBeCreated.push(newAsteroid);
 }
 
-Entities::Asteroid* AsteroidFactory::createSmallAsteroid() {
+void AsteroidFactory::createSmallAsteroid() {
     Entities::Asteroid* newAsteroid = new Entities::SmallAsteroid(
         getSpawnCoordinates(), getRandom(0.0f, 360.0f));
 
     newAsteroid->subscribe(this);
-    return newAsteroid;
+    objectsToBeCreated.push(newAsteroid);
 }
 
-Entities::Asteroid* AsteroidFactory::createHugeAsteroid(sf::Vector2f newPosition) {
+void AsteroidFactory::createHugeAsteroid(sf::Vector2f newPosition) {
     Entities::Asteroid* newAsteroid = new Entities::HugeAsteroid(
         newPosition, getRandom(0.0f, 360.0f));
     
     newAsteroid->subscribe(this);
-    return newAsteroid;
+    objectsToBeCreated.push(newAsteroid);
 }
 
-Entities::Asteroid* AsteroidFactory::createMediumAsteroid(sf::Vector2f newPosition) {
+void AsteroidFactory::createMediumAsteroid(sf::Vector2f newPosition) {
     Entities::Asteroid* newAsteroid = new Entities::MediumAsteroid(
         newPosition, getRandom(0.0f, 360.0f));
     
     newAsteroid->subscribe(this);
-    return newAsteroid;
+    objectsToBeCreated.push(newAsteroid);
 }
 
-Entities::Asteroid* AsteroidFactory::createSmallAsteroid(sf::Vector2f newPosition) {
+void AsteroidFactory::createSmallAsteroid(sf::Vector2f newPosition) {
     Entities::Asteroid* newAsteroid = new Entities::SmallAsteroid(
         newPosition, getRandom(0.0f, 360.0f));
     
     newAsteroid->subscribe(this);
-    return newAsteroid;
+    objectsToBeCreated.push(newAsteroid);
 }
 
 float AsteroidFactory::getRandom(float min, float max) {
@@ -70,6 +70,14 @@ int AsteroidFactory::getRandom(int min, int max) {
     std::default_random_engine eng(rd());
     std::uniform_int_distribution<> distr(min, max);
     return distr(eng);
+}
+
+std::queue<Entities::Asteroid*>& AsteroidFactory::getObjectsQueue() {
+    return objectsToBeCreated;
+}
+
+void AsteroidFactory::addObjectToQueue(Entities::Asteroid* newAsteroid) {
+    objectsToBeCreated.push(newAsteroid);
 }
 
 // Get position with random offset from edge

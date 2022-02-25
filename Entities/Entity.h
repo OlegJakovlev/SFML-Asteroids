@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <string>
+#include <bitset>
 #include "../AllInterfaces/IGame.h"
 #include <SFML/Graphics.hpp>
 
@@ -18,16 +19,20 @@ class Entity : public Interfaces::IGame {
     sf::Sprite& getSprite();
     void update(sf::RenderWindow* window) override;
     bool checkCollision(Entity* checkCollisionWith);
-    void setDead();
     bool isDead();
+    void setDead();
 
  protected:
     sf::Texture texture;
     sf::Sprite sprite;
-
     std::string name;
+
+    int collisionLayer = 0;
+    std::bitset<4> collisionMask{ "0000" };
+    bool canCollide = true; // change after 1.5 sec after spawn
     bool dead = false;
 
+    // Physics
     float velocity = 0;
     float angularVelocity = 0;
 

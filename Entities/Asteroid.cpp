@@ -7,9 +7,12 @@ Asteroid::Asteroid(const std::string& newTexturePath, const sf::Vector2f& newPos
     : Entity(newTexturePath, newPosition, newRotation) {
     velocity = newVelocity;
     name = "asteroid";
+    collisionMask = std::bitset<4>("0011");
+    collisionLayer = 2;
 }
 
 Asteroid::~Asteroid() {
+    ScoreController::getInstance().addScore(score);
 }
 
 void Asteroid::subscribe(Factories::AsteroidFactory* newFactory) {

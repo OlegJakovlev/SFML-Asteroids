@@ -10,6 +10,7 @@ namespace Entities {
 class MediumAsteroid : public Asteroid {
  public:
     MediumAsteroid(const sf::Vector2f& newPosition, const float newRotation);
+    ~MediumAsteroid();
 };
 
 }  // namespace Entities

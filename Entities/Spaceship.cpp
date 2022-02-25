@@ -6,14 +6,14 @@ Spaceship::Spaceship(const sf::Vector2f& newPosition, const float newRotation)
     : Entity("Sprites/Player.png", newPosition, newRotation) {
     angularVelocity = 5;
     terminalVelocity = 3;
-    velocity = 0;
     deltaClock = sf::Clock();
     name = "player";
+    collisionMask = std::bitset<4>("1110");
+    collisionLayer = 0;
     inputController = new InputController();
 }
 
 Spaceship::~Spaceship() {
-    std::cout << 1;
     delete inputController;
 }
 
@@ -22,8 +22,8 @@ void Spaceship::update(sf::RenderWindow* window) {
 
     // Calculate new offset
     projectileOffset = sf::Vector2f(
-        cos(sprite.getRotation() * 3.14 / 180) * sprite.getLocalBounds().width / 1.25,
-        sin(sprite.getRotation() * 3.14 / 180) * sprite.getLocalBounds().height / 1.25
+        cos(sprite.getRotation() * 3.14 / 180) * sprite.getLocalBounds().width,
+        sin(sprite.getRotation() * 3.14 / 180) * sprite.getLocalBounds().height
     );
 
     // Apply boost
@@ -43,22 +43,19 @@ void Spaceship::update(sf::RenderWindow* window) {
     if (inputController->isActionPressed("RotateLeft"))
         sprite.setRotation(sprite.getRotation() - angularVelocity);
 
-    //std::cout << "X: " << (sprite.getPosition().x) << " | Y: " << (sprite.getPosition().y) << "\n";
-    //std::cout << "Rotation: " << (sprite.getRotation()) << " degrees" << "\n";
-}
-
-bool Spaceship::shootProjectile() {
     // Shoot event
     if (inputController->isActionPressed("Shoot")
         && deltaClock.getElapsedTime() >= delayBetweenShots) {
         deltaClock.restart();
-        return true;
+        objectsToBeCreated.push(new Projectile(sprite.getPosition() + projectileOffset, sprite.getRotation()));
     }
-    return false;
+
+    //std::cout << "X: " << (sprite.getPosition().x) << " | Y: " << (sprite.getPosition().y) << "\n";
+    //std::cout << "Rotation: " << (sprite.getRotation()) << " degrees" << "\n";
 }
 
-sf::Vector2f Spaceship::getProjectileOffset() {
-    return projectileOffset;
+std::queue<Entities::Projectile*>& Spaceship::getObjectsQueue() {
+    return objectsToBeCreated;
 }
 
 }  // namespace Entities

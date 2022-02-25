@@ -5,6 +5,7 @@
 
 #include <string>
 #include "Entity.h"
+#include "../ScoreController.h";
 
 namespace Factories {
     class AsteroidFactory;
@@ -21,6 +22,7 @@ class Asteroid : public Entity {
 
 protected:
     Factories::AsteroidFactory* factory;
+    int score = 0;
 };
 
 }  // namespace Entities

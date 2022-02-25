@@ -152,6 +152,8 @@
     <ClCompile Include="Entities\Asteroid.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="AllInterfaces\IGame.cpp" />
+    <ClCompile Include="UI\Healthbar.cpp" />
+    <ClCompile Include="UI\GameUserInterface.cpp" />
     <ClCompile Include="InputController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Entities\Spaceship.cpp" />
@@ -159,6 +161,7 @@
     <ClCompile Include="Entities\SmallAsteroid.cpp" />
     <ClCompile Include="Entities\MediumAsteroid.cpp" />
     <ClCompile Include="Entities\HugeAsteroid.cpp" />
+    <ClCompile Include="ScoreController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -169,11 +172,14 @@
     <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="Entities\Spaceship.h" />
     <ClInclude Include="AllInterfaces\IGame.h" />
+    <ClInclude Include="UI\Healthbar.h" />
+    <ClInclude Include="UI\GameUserInterface.h" />
     <ClInclude Include="InputController.h" />
     <ClInclude Include="Entities\Projectile.h" />
     <ClInclude Include="Entities\SmallAsteroid.h" />
     <ClInclude Include="Entities\MediumAsteroid.h" />
     <ClInclude Include="Entities\HugeAsteroid.h" />
+    <ClInclude Include="ScoreController.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Sprites\Asteroids\Huge.png" />

@@ -44,11 +44,17 @@ void Entity::update(sf::RenderWindow* window) {
 }
 
 bool Entity::checkCollision(Entity* checkCollisionWith) {
+    if (checkCollisionWith == this) return false;
+    if (!canCollide || !checkCollisionWith->canCollide) return false;
+    if (!collisionMask[checkCollisionWith->collisionLayer]) return false;
+
     sf::FloatRect currentTransform = sprite.getGlobalBounds();
 
     if (checkCollisionWith->getSprite().getGlobalBounds().intersects(currentTransform)) {
         return true;
     }
+
+    
 }
 
 void Entity::setDead() {
